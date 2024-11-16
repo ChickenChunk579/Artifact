@@ -47,14 +47,20 @@ jobs:
       # Build and sign the ipa using a single flutter command
       - name: Building IPA
         run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist --no-codesign && find build
-          
+      
+      - name: IPAify
+        run: |
+          mkdir Payload
+          cp build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app Payload -r
+          zip -r "app.ipa" "Payload"
+
       # Collect the file and upload as artifact         
-      - name: collect ipa artifacts
+      - name: Upload IPA
         uses: actions/upload-artifact@v3
         with:
          name: release-ipa
          # Path to the release files
-         path: ./build/*.ipa
+         path: ./app.ipa
 
       # Important! Cleanup: remove the certificate and provisioning profile from the runner!
       - name: Clean up keychain and provisioning profile
