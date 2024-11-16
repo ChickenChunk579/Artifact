@@ -51,7 +51,7 @@ jobs:
       - name: IPAify
         run: |
           mkdir Payload
-          cp build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app Payload -r
+          mv build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app Payload
           zip -r "app.ipa" "Payload"
 
       # Collect the file and upload as artifact         
