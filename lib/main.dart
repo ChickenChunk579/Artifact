@@ -67,22 +67,20 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Stack(
-        children: [
-          Expanded(
-            child: Container(
-                color: Colors.black,
-                child: Center(
-                  child: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: CustomPaint(
-                      painter: MyPainter(),
-                    ),
+      body: Column(children: [
+        Expanded(
+          child: Container(
+              color: Colors.black,
+              child: Center(
+                child: AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: CustomPaint(
+                    painter: MyPainter(),
                   ),
-                )),
-          ),
-        ],
-      ),
+                ),
+              )),
+        )
+      ]),
 
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
