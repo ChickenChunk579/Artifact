@@ -39,7 +39,7 @@ jobs:
       - name: Flutter get
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.5.4'
+          channel: stable
 
       # Install your project's dependencies
       - run: flutter pub get
