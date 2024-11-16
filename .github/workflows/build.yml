@@ -1,5 +1,7 @@
 name: "Build"
-on: workflow_dispatch
+on:
+  push:
+    branches: ["main"]
     
 jobs:
   # Build job
