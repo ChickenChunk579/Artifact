@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "700231469008",
+    "project_id": "artifact-engine",
+    "storage_bucket": "artifact-engine.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:700231469008:android:0adce47071ab8b69879bd5",
+        "android_client_info": {
+          "package_name": "com.chickenchunk.flutterEngine"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeoGsycitzy9w1NfHVeZ_20GFFsU1Q5RE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,13 +3,14 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_engine/asset_loader.dart';
 import 'package:flutter_engine/scene.dart';
 import 'package:flutter_engine/test_scene.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -51,9 +52,9 @@ class MyPainter extends CustomPainter {
   }
 
   @override
-  void paint(Canvas _canvas, Size _size) {
-    canvas = _canvas;
-    size = _size;
+  void paint(Canvas canvas, Size size) {
+    canvas = canvas;
+    size = size;
     final clearPaint = Paint()
       ..color = Colors.blue
       ..style = PaintingStyle.fill;
@@ -89,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    /*return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
@@ -106,6 +107,18 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               )),
         )
       ]),
+    );*/
+    return Scaffold(
+      appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: const Text("Artifact")),
+      body: const TabBarView(
+        children: [
+          Center(child: Text('Content 1')),
+          Center(child: Text('Content 2')),
+          Center(child: Text('Content 3')),
+        ],
+      ),
     );
   }
 }

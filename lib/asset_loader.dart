@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AssetLoader {
-  static Map<String, ByteData> assets = Map<String, ByteData>();
-  static Map<String, ui.Image> images = Map<String, ui.Image>();
+  static Map<String, ByteData> assets = <String, ByteData>{};
+  static Map<String, ui.Image> images = <String, ui.Image>{};
 
   static Future decodeImage(String assetPath, ByteData data) async {
     final data = AssetLoader.assets[assetPath]!;

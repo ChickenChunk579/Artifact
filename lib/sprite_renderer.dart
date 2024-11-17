@@ -9,7 +9,7 @@ import 'package:flutter_engine/main.dart';
 
 class SpriteRenderer extends Component {
   flutter.Color color = flutter.Colors.white;
-  ui.Image? sprite = null;
+  ui.Image? sprite;
   bool loadingImage = false;
   bool loadedImage = false;
 

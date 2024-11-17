@@ -12,10 +12,10 @@ class Transform extends Component {
   double getHeight() => height;
 
   Transform.fromXYWH(double x, double y, double width, double height)
-      : this.x = x,
-        this.y = y,
-        this.width = width,
-        this.height = height;
+      : x = x,
+        y = y,
+        width = width,
+        height = height;
 
   @override
   void init() {}
