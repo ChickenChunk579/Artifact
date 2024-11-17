@@ -106,7 +106,7 @@ jobs:
         run: flutter build linux
       - name: Create archive
         run: zip -r "app.zip" "build/linux/x64/release/bundle/"
-        - name: Upload app
+      - name: Upload app
         uses: actions/upload-artifact@v3
         with:
           name: release-linux
