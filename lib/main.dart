@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_engine/asset_loader.dart';
 import 'package:flutter_engine/scene.dart';
 import 'package:flutter_engine/test_scene.dart';
 
-void main() {
+void main() async {
   runApp(MyApp());
 }
 
@@ -58,7 +59,9 @@ class MyPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), clearPaint);
 
-    scene.tick();
+    if (!_MyHomePageState.assetsLoaded) {
+      scene.tick();
+    }
 
     py = py + 0.01;
   }
@@ -68,9 +71,15 @@ class MyPainter extends CustomPainter {
 }
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
+  static bool assetsLoaded = false;
+  static bool loadingImages = true;
+
   @override
   void initState() {
-    SchedulerBinding.instance.addPersistentFrameCallback((timeStamp) {
+    SchedulerBinding.instance.addPersistentFrameCallback((timeStamp) async {
+      if (!assetsLoaded && loadingImages) {
+        await AssetLoader.load("assets/bird.png");
+      }
       // Your frame update logic here
       setState(() {}); // Force rebuild
       SchedulerBinding.instance.scheduleFrame();

@@ -1,12 +1,25 @@
-import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart' as flutter;
+import 'package:flutter_engine/asset_loader.dart';
 import 'package:flutter_engine/component.dart';
-import 'package:flutter_engine/transform.dart' as artifact;
+import 'package:flutter_engine/transform.dart';
 import 'package:flutter_engine/main.dart';
 
 class SpriteRenderer extends Component {
-  Color color = Colors.white;
+  flutter.Color color = flutter.Colors.white;
+  ui.Image? sprite = null;
+  bool loadingImage = false;
+  bool loadedImage = false;
 
-  late artifact.Transform transform;
+  late Transform transform;
+
+  String _spritePath = "";
+
+  SpriteRenderer(String path) {
+    _spritePath = path;
+  }
 
   @override
   void init() {
@@ -15,16 +28,27 @@ class SpriteRenderer extends Component {
 
   @override
   void tick() {
-    final paint = Paint()
+    if (!loadedImage) {
+      if (!AssetLoader.assets.containsKey(_spritePath)) {
+        return;
+      } else {
+        if (loadingImage) {
+        } else {
+          debugPrint("Decoding");
+          ByteData data = AssetLoader.assets[_spritePath]!;
+          ui.decodeImageFromList(data.buffer.asUint8List(), (image) {
+            sprite = image;
+            loadedImage = true;
+            debugPrint("Decoded: $sprite");
+          });
+          return;
+        }
+      }
+    }
+    final paint = flutter.Paint()
       ..color = color
-      ..style = PaintingStyle.fill;
-    MyPainter.canvas.drawRect(
-        Rect.fromLTWH(
-          transform.x * (MyPainter.size.width / 100),
-          transform.y * (MyPainter.size.width / 100),
-          transform.width * (MyPainter.size.width / 100),
-          transform.height * (MyPainter.size.width / 100),
-        ),
-        paint);
+      ..style = flutter.PaintingStyle.fill;
+    MyPainter.canvas
+        .drawImage(sprite!, flutter.Offset(transform.x, transform.y), paint);
   }
 }

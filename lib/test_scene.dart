@@ -6,7 +6,7 @@ import 'package:flutter_engine/transform.dart';
 
 class Fall extends Component {
   double velocity = 0.0;
-  double gravity = 0.02;
+  double gravity = 0.1;
 
   late Transform transform;
 
@@ -28,7 +28,7 @@ class TestScene extends SceneBase {
     Entity entity = Entity();
     entity.name = "Block";
     entity.components.add(Transform.fromXYWH(1, 1, 5, 5));
-    entity.components.add(SpriteRenderer());
+    entity.components.add(SpriteRenderer("assets/bird.png"));
     entity.components.add(Fall());
     entities.add(entity);
   }
