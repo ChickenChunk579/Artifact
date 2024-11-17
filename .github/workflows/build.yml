@@ -81,10 +81,10 @@ jobs:
           channel: stable
       - name: Install dependencies
         run: flutter pub get
-      - name: Build and sign the app
-        run: flutter build --release --no-codesign
+      - name: Build
+        run: flutter build windows
       - name: Create archive
-        run: tar -a -c -f "app.zip" "./build/windows/x64/runner/Debug"
+        run: tar -a -c -f "app.zip" "./build/windows/x64/runner/Release"
       - name: Upload app
         uses: actions/upload-artifact@v3
         with:
