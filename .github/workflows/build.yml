@@ -84,10 +84,31 @@ jobs:
       - name: Build
         run: flutter build windows
       - name: Create archive
-        run: tar -a -c -f "app.zip" "./build/windows/x64/runner/Release"
+        run: powershell Compress-Archive .\build\windows\x64\runner\Release app.zip
       - name: Upload app
         uses: actions/upload-artifact@v3
         with:
           name: release-exe
           # Path to the release files
           path: app.zip
+  build-linux:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Flutter get
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Build
+        run: flutter build linux
+      - name: Upload app
+        uses: actions/upload-artifact@v3
+      - name: Create archive
+        run: zip -r "app.zip" "build/linux/x64/release/bundle/"
+        with:
+          name: release-linux
+          # Path to the release files
+          path: build/linux/x64/release/bundle/
