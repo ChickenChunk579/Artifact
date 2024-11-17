@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_engine/scene.dart';
+import 'package:flutter_engine/test_scene.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,21 +37,28 @@ class MyPainter extends CustomPainter {
   static double px = 2;
   static double py = 2;
 
+  static late Canvas canvas;
+  static late Size size;
+  static late SceneBase scene;
+  static bool sceneInitialized = false;
+
+  MyPainter() {
+    if (sceneInitialized) return;
+    scene = TestScene();
+    scene.init();
+    sceneInitialized = true;
+  }
+
   @override
-  void paint(Canvas canvas, Size size) {
+  void paint(Canvas _canvas, Size _size) {
+    canvas = _canvas;
+    size = _size;
     final clearPaint = Paint()
       ..color = Colors.blue
       ..style = PaintingStyle.fill;
-
-    final rectPaint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.fill;
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), clearPaint);
 
-    canvas.drawRect(
-        Rect.fromLTWH(px * (size.width / 100), py * (size.width / 100),
-            0.5 * (size.width / 10), 0.5 * (size.width / 10)),
-        rectPaint);
+    scene.tick();
 
     py = py + 0.01;
   }
