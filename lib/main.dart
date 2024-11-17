@@ -100,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               color: Colors.black,
               child: Center(
                 child: AspectRatio(
-                  aspectRatio: 16 / 9,
+                  aspectRatio: 9 / 16,
                   child: CustomPaint(painter: MyPainter()),
                 ),
               )),
