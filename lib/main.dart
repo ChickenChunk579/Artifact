@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -31,33 +32,41 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyPainter extends CustomPainter {
+  static double px = 2;
+  static double py = 2;
+
   @override
   void paint(Canvas canvas, Size size) {
     final clearPaint = Paint()
       ..color = Colors.blue
       ..style = PaintingStyle.fill;
+
     final rectPaint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.fill;
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), clearPaint);
 
     canvas.drawRect(
-        Rect.fromLTWH(2 * (size.width / 100), 2 * (size.width / 100),
+        Rect.fromLTWH(px * (size.width / 100), py * (size.width / 100),
             0.5 * (size.width / 10), 0.5 * (size.width / 10)),
         rectPaint);
+
+    py = py + 0.01;
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
+class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
+  @override
+  void initState() {
+    SchedulerBinding.instance.addPersistentFrameCallback((timeStamp) {
+      // Your frame update logic here
+      setState(() {}); // Force rebuild
+      SchedulerBinding.instance.scheduleFrame();
     });
+    super.initState();
   }
 
   @override
@@ -74,19 +83,11 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Center(
                 child: AspectRatio(
                   aspectRatio: 16 / 9,
-                  child: CustomPaint(
-                    painter: MyPainter(),
-                  ),
+                  child: CustomPaint(painter: MyPainter()),
                 ),
               )),
         )
       ]),
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
