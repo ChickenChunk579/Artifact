@@ -48,7 +48,7 @@ jobs:
 
       # Build and sign the ipa using a single flutter command
       - name: Building IPA
-        run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist --no-codesign && find build
+        run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist --no-codesign
       
       - name: IPAify
         run: |
@@ -70,3 +70,24 @@ jobs:
         run: |
           security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
           rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Flutter get
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Build and sign the app
+        run: flutter build --release --no-codesign
+      - name: Create archive
+        run: tar -a -c -f "app.zip" "./build/windows/x64/runner/Debug"
+      - name: Upload app
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-exe
+          # Path to the release files
+          path: app.zip
